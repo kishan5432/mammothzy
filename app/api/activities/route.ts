@@ -11,9 +11,10 @@ export async function POST(req: NextRequest) {
       { success: true, data: activity },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: message },
       { status: 400 }
     );
   }
