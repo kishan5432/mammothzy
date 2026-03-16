@@ -93,10 +93,10 @@ export default function LocationDetailsForm({
   return (
     <form className="flex flex-col gap-6">
       <div>
-        <h2 className="text-base font-semibold text-gray-900">
+        <h2 className="text-lg font-semibold text-gray-900">
           Location Details
         </h2>
-        <p className="text-sm text-gray-500 mt-0.5">
+        <p className="text-sm text-gray-500 mt-1">
           Please specify the address for where the activity takes place.
         </p>
       </div>
@@ -109,7 +109,7 @@ export default function LocationDetailsForm({
         <input
           {...register("addressLine1")}
           placeholder="House number and street name"
-          className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+          className="w-full border border-gray-300 rounded-2xl px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
         />
       </FormField>
 
@@ -117,7 +117,7 @@ export default function LocationDetailsForm({
         <input
           {...register("addressLine2")}
           placeholder="Other information, e.g., building name, landmark, etc."
-          className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+          className="w-full border border-gray-300 rounded-2xl px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
         />
       </FormField>
 
@@ -125,7 +125,7 @@ export default function LocationDetailsForm({
         <input
           {...register("zipCode")}
           placeholder="eg. 123 467"
-          className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+          className="w-full border border-gray-300 rounded-2xl px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
         />
       </FormField>
 
@@ -134,14 +134,14 @@ export default function LocationDetailsForm({
           <input
             {...register("city")}
             placeholder="Your City"
-            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full border border-gray-300 rounded-2xl px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
           />
         </FormField>
 
         <FormField label="State" required error={errors.state?.message}>
           <select
             {...register("state")}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black bg-white text-gray-700"
+            className="w-full border border-gray-300 rounded-2xl px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400 bg-white text-gray-700"
           >
             <option value="">Your State</option>
             {US_STATES.map((state) => (
@@ -154,10 +154,10 @@ export default function LocationDetailsForm({
       </div>
 
       <div>
-        <h2 className="text-base font-semibold text-gray-900">
+        <h2 className="text-lg font-semibold text-gray-900">
           Contact details
         </h2>
-        <p className="text-sm text-gray-500 mt-0.5">
+        <p className="text-sm text-gray-500 mt-1">
           Please provide contact information for this activity.
         </p>
       </div>
@@ -177,23 +177,23 @@ export default function LocationDetailsForm({
           <input
             {...register("contactName")}
             placeholder="Contact Name"
-            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full border border-gray-300 rounded-2xl px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
           />
         </FormField>
       </div>
 
-      <div className="flex gap-3 justify-end mt-2">
+      <div className="flex gap-3 justify-start mt-4">
         <button
           type="button"
           onClick={onBack}
-          className="px-6 py-2.5 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+          className="px-8 py-2.5 border border-gray-300 rounded-2xl text-sm font-medium text-slate-900 hover:bg-gray-50 transition-colors"
         >
           Previous
         </button>
         <button
           type="submit"
           onClick={handleSubmit(onSubmit)}
-          className="px-6 py-2.5 bg-gray-900 hover:bg-black text-white rounded-md text-sm font-medium transition-colors"
+          className="px-8 py-2.5 bg-slate-900 hover:bg-black text-white rounded-2xl text-sm font-medium transition-colors"
         >
           Submit
         </button>

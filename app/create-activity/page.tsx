@@ -61,30 +61,32 @@ export default function CreateActivityPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
-      <main className="flex-1 flex flex-col px-4 py-8 max-w-3xl mx-auto w-full">
-        <h1 className="text-2xl font-bold text-gray-900 mb-8">
-          Create new Activity
-        </h1>
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="hidden md:block w-48 flex-shrink-0">
-            <StepTabs currentStep={currentStep} />
-          </div>
-          <div className="flex-1">
-            {currentStep === 1 && (
-              <ActivityDetailsForm
-                defaultValues={step1Data}
-                onNext={handleStep1Next}
-              />
-            )}
-            {currentStep === 2 && (
-              <LocationDetailsForm
-                defaultValues={step2Data}
-                onBack={handleStep2Back}
-                onSubmit={handleStep2Submit}
-              />
-            )}
+      <main className="flex-1 px-4 sm:px-6 py-6 sm:py-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-5">
+            Create new Activity
+          </h1>
+          <div className="flex flex-col md:flex-row gap-4 md:gap-5">
+            <div className="w-full md:w-44 md:flex-shrink-0">
+              <StepTabs currentStep={currentStep} />
+            </div>
+            <div className="flex-1 bg-white rounded-lg border border-gray-200 p-4 sm:p-6">
+              {currentStep === 1 && (
+                <ActivityDetailsForm
+                  defaultValues={step1Data}
+                  onNext={handleStep1Next}
+                />
+              )}
+              {currentStep === 2 && (
+                <LocationDetailsForm
+                  defaultValues={step2Data}
+                  onBack={handleStep2Back}
+                  onSubmit={handleStep2Submit}
+                />
+              )}
+            </div>
           </div>
         </div>
       </main>

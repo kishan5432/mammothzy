@@ -1,5 +1,35 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
+
+const COUNTRIES = [
+  {
+    code: "+1",
+    label: "US",
+    flag: "https://img.icons8.com/?size=100&id=aRiu1GGi6Aoe&format=png&color=000000",
+  },
+  {
+    code: "+91",
+    label: "IN",
+    flag: "https://img.icons8.com/?size=100&id=esGVrxg9VCJ1&format=png&color=000000",
+  },
+  {
+    code: "+1",
+    label: "CA",
+    flag: "https://img.icons8.com/?size=100&id=esGVrxg9VCJ1&format=png&color=000000",
+  },
+  {
+    code: "+33",
+    label: "FR",
+    flag: "https://img.icons8.com/?size=100&id=esGVrxg9VCJ1&format=png&color=000000",
+  },
+  {
+    code: "+61",
+    label: "AU",
+    flag: "https://img.icons8.com/?size=100&id=P94rwJyovccu&format=png&color=000000",
+  },
+];
+
 interface PhoneInputProps {
   countryCode: string;
   onCountryCodeChange: (code: string) => void;
@@ -17,32 +47,62 @@ export default function PhoneInput({
   error,
   placeholder,
 }: PhoneInputProps) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const selected = COUNTRIES.find((c) => c.code === countryCode) ?? COUNTRIES[0];
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
   return (
     <div>
-      <div className="flex flex-row border border-gray-300 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-black">
-        <select
-          value={countryCode}
-          onChange={(e) => onCountryCodeChange(e.target.value)}
-          className="border-0 border-r border-gray-300 bg-white px-2 py-2 text-sm text-gray-700 cursor-pointer outline-none"
-        >
-          <option value="+1">🇺🇸 +1</option>
-          <option value="+44">🇬🇧 +44</option>
-          <option value="+91">🇮🇳 +91</option>
-          <option value="+61">🇦🇺 +61</option>
-          <option value="+1">🇨🇦 +1</option>
-          <option value="+49">🇩🇪 +49</option>
-          <option value="+33">🇫🇷 +33</option>
-          <option value="+81">🇯🇵 +81</option>
-          <option value="+55">🇧🇷 +55</option>
-          <option value="+65">🇸🇬 +65</option>
-        </select>
+      <div className="flex flex-row border border-gray-300 rounded-3xl overflow-visible focus-within:ring-1 focus-within:ring-gray-400 relative">
+        {/* Flag trigger */}
+        <div ref={ref} className="relative shrink-0">
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="flex items-center gap-1 px-2 py-2 bg-white border-r border-gray-300 h-full hover:bg-gray-50 focus:outline-none"
+          >
+            <img src={selected.flag} alt={selected.label} className="w-5 h-5 rounded-sm object-cover" />
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="text-gray-400">
+              <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          {/* Dropdown */}
+          {open && (
+            <div className="absolute top-full left-0 mt-1 z-50 bg-white border border-gray-200 rounded-md shadow-lg min-w-[120px] py-1">
+              {COUNTRIES.map((c, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => { onCountryCodeChange(c.code); setOpen(false); }}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm hover:bg-gray-50 transition-colors ${
+                    selected.label === c.label ? "bg-gray-50 font-medium" : "text-gray-700"
+                  }`}
+                >
+                  <img src={c.flag} alt={c.label} className="w-5 h-5 rounded-sm object-cover shrink-0" />
+                  <span className="text-gray-500">{c.code}</span>
+                  <span className="text-gray-700">{c.label}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         <input
           type="tel"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="flex-1 px-3 py-2 text-sm outline-none bg-white border-0"
+          className="flex-1 px-3 py-2 text-sm outline-none bg-white rounded-r-2xl"
         />
       </div>
       {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
