@@ -173,7 +173,7 @@ export default function LocationDetailsForm({
           error={errors.contactNumber?.message}
           placeholder="Contact Number"
         />
-        <FormField error={errors.contactName?.message}>
+        <FormField label="" error={errors.contactName?.message}>
           <input
             {...register("contactName")}
             placeholder="Contact Name"
