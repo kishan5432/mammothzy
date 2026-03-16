@@ -1,9 +1,11 @@
+import Image from "next/image";
+
 export default function Footer() {
   return (
     <footer className="w-full bg-white border-t border-gray-200 mt-auto">
       <div className="flex flex-col items-center gap-3 py-8 sm:py-10 px-4 text-center">
         <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="mammothzy" className="h-20 w-auto object-contain" />
+          <Image src="/logo.png" alt="mammothzy" width={160} height={160} className="h-20 w-auto object-contain" quality={100} />
         </div>
 
         <p className="text-sm text-gray-500 max-w-2xl">

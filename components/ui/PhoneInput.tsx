@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 
 const COUNTRIES = [
@@ -70,7 +71,7 @@ export default function PhoneInput({
             onClick={() => setOpen((v) => !v)}
             className="flex items-center gap-1 px-2 py-2 bg-white border-r border-gray-300 h-full hover:bg-gray-50 focus:outline-none"
           >
-            <img src={selected.flag} alt={selected.label} className="w-5 h-5 rounded-sm object-cover" />
+            <Image src={selected.flag} alt={selected.label} width={20} height={20} className="rounded-sm object-cover" />
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="text-gray-400">
               <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -88,7 +89,7 @@ export default function PhoneInput({
                     selected.label === c.label ? "bg-gray-50 font-medium" : "text-gray-700"
                   }`}
                 >
-                  <img src={c.flag} alt={c.label} className="w-5 h-5 rounded-sm object-cover shrink-0" />
+                  <Image src={c.flag} alt={c.label} width={20} height={20} className="rounded-sm object-cover shrink-0" />
                   <span className="text-gray-500">{c.code}</span>
                   <span className="text-gray-700">{c.label}</span>
                 </button>
