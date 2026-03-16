@@ -28,8 +28,7 @@ const ActivitySchema = new Schema<IActivity>({
   countryCode: { type: String, default: "+1" },
   contactNumber: { type: String, required: true },
   contactName: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-});
+}, { timestamps: true });
 
 export default mongoose.models.Activity ||
   mongoose.model<IActivity>("Activity", ActivitySchema);
