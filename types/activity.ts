@@ -34,7 +34,7 @@ export const locationDetailsSchema = z.object({
   zipCode: z.string().min(1, "ZIP code is required"),
   city: z.string().min(1, "City is required"),
   state: z.string().min(1, "State is required"),
-  countryCode: z.string().default("+1"),
+  countryCode: z.string().min(1),
   contactNumber: z.string().min(7, "Valid phone number required"),
   contactName: z.string().min(1, "Contact name is required"),
 });
