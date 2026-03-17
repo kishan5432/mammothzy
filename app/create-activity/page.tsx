@@ -15,13 +15,10 @@ import {
 
 export default function CreateActivityPage() {
   const [currentStep, setCurrentStep] = useState<1 | 2>(1);
-  const [step1Data, setStep1Data] = useState<Partial<ActivityDetailsFormData>>(
-    {}
-  );
-  const [step2Data, setStep2Data] = useState<Partial<LocationDetailsFormData>>(
-    {}
-  );
+  const [step1Data, setStep1Data] = useState<Partial<ActivityDetailsFormData>>({});
+  const [step2Data, setStep2Data] = useState<Partial<LocationDetailsFormData>>({});
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleStep1Next = (data: ActivityDetailsFormData) => {
     setStep1Data(data);
@@ -34,11 +31,11 @@ export default function CreateActivityPage() {
 
   const handleStep2Submit = async (data: LocationDetailsFormData) => {
     setStep2Data(data);
+    setIsLoading(true);
     const combinedData: CombinedActivityData = {
       ...(step1Data as ActivityDetailsFormData),
       ...data,
     };
-    console.log("Form submitted:", combinedData);
     try {
       const response = await fetch("/api/activities", {
         method: "POST",
@@ -49,6 +46,8 @@ export default function CreateActivityPage() {
       console.log("Saved to DB:", result);
     } catch (error) {
       console.error("Error saving to DB:", error);
+    } finally {
+      setIsLoading(false);
     }
     setShowModal(true);
   };
@@ -84,6 +83,7 @@ export default function CreateActivityPage() {
                   defaultValues={step2Data}
                   onBack={handleStep2Back}
                   onSubmit={handleStep2Submit}
+                  isLoading={isLoading}
                 />
               )}
             </div>

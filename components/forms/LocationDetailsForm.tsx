@@ -10,68 +10,30 @@ import FormField from "@/components/ui/FormField";
 import PhoneInput from "@/components/ui/PhoneInput";
 
 const US_STATES = [
-  "Alabama",
-  "Alaska",
-  "Arizona",
-  "Arkansas",
-  "California",
-  "Colorado",
-  "Connecticut",
-  "Delaware",
-  "Florida",
-  "Georgia",
-  "Hawaii",
-  "Idaho",
-  "Illinois",
-  "Indiana",
-  "Iowa",
-  "Kansas",
-  "Kentucky",
-  "Louisiana",
-  "Maine",
-  "Maryland",
-  "Massachusetts",
-  "Michigan",
-  "Minnesota",
-  "Mississippi",
-  "Missouri",
-  "Montana",
-  "Nebraska",
-  "Nevada",
-  "New Hampshire",
-  "New Jersey",
-  "New Mexico",
-  "New York",
-  "North Carolina",
-  "North Dakota",
-  "Ohio",
-  "Oklahoma",
-  "Oregon",
-  "Pennsylvania",
-  "Rhode Island",
-  "South Carolina",
-  "South Dakota",
-  "Tennessee",
-  "Texas",
-  "Utah",
-  "Vermont",
-  "Virginia",
-  "Washington",
-  "West Virginia",
-  "Wisconsin",
-  "Wyoming",
+  "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
+  "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho",
+  "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana",
+  "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
+  "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada",
+  "New Hampshire", "New Jersey", "New Mexico", "New York",
+  "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon",
+  "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
+  "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
+  "West Virginia", "Wisconsin", "Wyoming",
 ];
 
 interface LocationDetailsFormProps {
   defaultValues?: Partial<LocationDetailsFormData>;
   onBack: () => void;
   onSubmit: (data: LocationDetailsFormData) => void;
+  isLoading?: boolean;
 }
 
 export default function LocationDetailsForm({
   defaultValues,
   onBack,
   onSubmit,
+  isLoading = false,
 }: LocationDetailsFormProps) {
   const {
     register,
@@ -93,19 +55,13 @@ export default function LocationDetailsForm({
   return (
     <form className="flex flex-col gap-6">
       <div>
-        <h2 className="text-lg font-semibold text-gray-900">
-          Location Details
-        </h2>
+        <h2 className="text-lg font-semibold text-gray-900">Location Details</h2>
         <p className="text-sm text-gray-500 mt-1">
           Please specify the address for where the activity takes place.
         </p>
       </div>
 
-      <FormField
-        label="Address Line 1"
-        required
-        error={errors.addressLine1?.message}
-      >
+      <FormField label="Address Line 1" required error={errors.addressLine1?.message}>
         <input
           {...register("addressLine1")}
           placeholder="House number and street name"
@@ -145,18 +101,14 @@ export default function LocationDetailsForm({
           >
             <option value="">Your State</option>
             {US_STATES.map((state) => (
-              <option key={state} value={state}>
-                {state}
-              </option>
+              <option key={state} value={state}>{state}</option>
             ))}
           </select>
         </FormField>
       </div>
 
       <div>
-        <h2 className="text-lg font-semibold text-gray-900">
-          Contact details
-        </h2>
+        <h2 className="text-lg font-semibold text-gray-900">Contact details</h2>
         <p className="text-sm text-gray-500 mt-1">
           Please provide contact information for this activity.
         </p>
@@ -167,9 +119,7 @@ export default function LocationDetailsForm({
           countryCode={countryCode}
           onCountryCodeChange={(code) => setValue("countryCode", code)}
           value={contactNumber ?? ""}
-          onChange={(val) =>
-            setValue("contactNumber", val, { shouldValidate: true })
-          }
+          onChange={(val) => setValue("contactNumber", val, { shouldValidate: true })}
           error={errors.contactNumber?.message}
           placeholder="Contact Number"
         />
@@ -186,16 +136,24 @@ export default function LocationDetailsForm({
         <button
           type="button"
           onClick={onBack}
-          className="px-8 py-2.5 border border-gray-300 rounded-2xl text-sm font-medium text-slate-900 hover:bg-gray-50 transition-colors"
+          disabled={isLoading}
+          className="px-8 py-2.5 border border-gray-300 rounded-2xl text-sm font-medium text-slate-900 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Previous
         </button>
         <button
           type="submit"
           onClick={handleSubmit(onSubmit)}
-          className="px-8 py-2.5 bg-slate-900 hover:bg-black text-white rounded-2xl text-sm font-medium transition-colors"
+          disabled={isLoading}
+          className="flex items-center gap-2 px-8 py-2.5 bg-slate-900 hover:bg-black text-white rounded-2xl text-sm font-medium transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
         >
-          Submit
+          {isLoading && (
+            <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+            </svg>
+          )}
+          {isLoading ? "Submitting..." : "Submit"}
         </button>
       </div>
     </form>
