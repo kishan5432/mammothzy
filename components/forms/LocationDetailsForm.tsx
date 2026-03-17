@@ -85,7 +85,7 @@ export default function LocationDetailsForm({
         />
       </FormField>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <FormField label="City" required error={errors.city?.message}>
           <input
             {...register("city")}
@@ -114,7 +114,8 @@ export default function LocationDetailsForm({
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
+        <div className="min-w-0">
         <PhoneInput
           countryCode={countryCode}
           onCountryCodeChange={(code) => setValue("countryCode", code)}
@@ -123,13 +124,17 @@ export default function LocationDetailsForm({
           error={errors.contactNumber?.message}
           placeholder="Contact Number"
         />
-        <FormField label="" error={errors.contactName?.message}>
+        </div>
+        <div className="flex flex-col gap-1 min-w-0">
           <input
             {...register("contactName")}
             placeholder="Contact Name"
             className="w-full border border-gray-300 rounded-2xl px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
           />
-        </FormField>
+          {errors.contactName && (
+            <p className="text-xs text-red-500 mt-0.5">{errors.contactName.message}</p>
+          )}
+        </div>
       </div>
 
       <div className="flex gap-3 justify-start mt-4">

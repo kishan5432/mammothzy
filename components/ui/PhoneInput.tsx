@@ -62,7 +62,7 @@ export default function PhoneInput({
   }, []);
 
   return (
-    <div>
+    <div className="w-full min-w-0">
       <div className="flex flex-row border border-gray-300 rounded-3xl overflow-visible focus-within:ring-1 focus-within:ring-gray-400 relative">
         {/* Flag trigger */}
         <div ref={ref} className="relative shrink-0">
